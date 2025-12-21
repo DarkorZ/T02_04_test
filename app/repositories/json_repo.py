@@ -22,3 +22,6 @@ class JSONRepository:
         except (json.JSONDecodeError, FileNotFoundError):
             return []
 
+    def save_all(self, data: List[Dict]):
+        with open(self.file_path, 'w') as f:
+            json.dump(data, f, indent=4)
