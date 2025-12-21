@@ -41,3 +41,13 @@ class MinimercadoService:
             raise HTTPException(status_code=404, detail="No encontrado")
         self.repo_prod.save_all(nueva_lista)
         return {"message": "Eliminado exitosamente"}
+    
+    def recibir_mercancia(self, producto_id: str, cantidad: int):
+        """Aumenta stock por llegada de proveedor [cite: 411]"""
+        productos = self.repo_prod.get_all()
+        for p in productos:
+            if p['id'] == producto_id:
+                p['stock'] += cantidad
+                self.repo_prod.save_all(productos)
+                return p
+        raise HTTPException(status_code=404, detail="No encontrado")
