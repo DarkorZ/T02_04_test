@@ -28,8 +28,19 @@ class Cliente(BaseModel):
     nombre: str
     email: str
     puntosFidelidad: int = 0
-    
 
 
+class DetalleVenta(BaseModel):
+    producto_id: str
+    nombre_producto: str
+    cantidad: int
+    precio_unitario: float
+    subtotal: float
 
+class Venta(BaseModel):
+    id_factura: str
+    fecha: datetime = Field(default_factory=datetime.now)
+    cliente_id: str
+    items: List[DetalleVenta]
+    total: float
 
