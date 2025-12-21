@@ -24,3 +24,38 @@ class MinimercadoService:
         productos.append(jsonable_encoder(producto))
         self.repo_prod.save_all(productos)
         return producto
+    
+    def actualizar_producto(self, producto_id: str, datos: dict):
+        productos = self.repo_prod.get_all()
+        for p in productos:
+            if p['id'] == producto_id:
+                p.update(datos)
+                self.repo_prod.save_all(productos)
+                return p
+        raise HTTPException(status_code=404, detail="No encontrado")
+    
+    def eliminar_producto(self, producto_id: str):
+        productos = self.repo_prod.get_all()
+        nueva_lista = [p for p in productos if p['id'] != producto_id]
+        if len(nueva_lista) == len(productos):
+            raise HTTPException(status_code=404, detail="No encontrado")
+        self.repo_prod.save_all(nueva_lista)
+        return {"message": "Eliminado exitosamente"}
+    
+    def recibir_mercancia(self, producto_id: str, cantidad: int):
+        """Aumenta stock por llegada de proveedor [cite: 411]"""
+        productos = self.repo_prod.get_all()
+        for p in productos:
+            if p['id'] == producto_id:
+                p['stock'] += cantidad
+                self.repo_prod.save_all(productos)
+                return p
+        raise HTTPException(status_code=404, detail="No encontrado")
+    
+    def registrar_cliente(self, cliente: Cliente):
+        clientes = self.repo_cli.get_all()
+        if any(c['id'] == cliente.id for c in clientes):
+            raise HTTPException(status_code=400, detail="Cliente ya existe")
+        clientes.append(jsonable_encoder(cliente))
+        self.repo_cli.save_all(clientes)
+        return cliente
