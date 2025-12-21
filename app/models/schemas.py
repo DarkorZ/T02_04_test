@@ -16,6 +16,13 @@ class Producto(EntityBase):
     stock: int
     active: bool = True
 
+class ProductoUpdate(BaseModel):
+    nombre: Optional[str] = None
+    precio: Optional[float] = None
+    stock: Optional[int] = None
+    categoria: Optional[str] = None
+    active: Optional[bool] = None
+
 
 
 
