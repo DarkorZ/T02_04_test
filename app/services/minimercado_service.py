@@ -10,3 +10,6 @@ class MinimercadoService:
         self.repo_prod = JSONRepository("data/productos.json")
         self.repo_cli = JSONRepository("data/clientes.json")
         self.repo_ventas = JSONRepository("data/ventas.json")
+
+    def listar_inventario(self):
+        return self.repo_prod.get_all()
