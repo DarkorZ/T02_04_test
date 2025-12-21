@@ -44,3 +44,7 @@ class Venta(BaseModel):
     items: List[DetalleVenta]
     total: float
 
+# --- MODELO PARA LOS ITEMS QUE VIENEN EN EL CARRITO ---
+class ItemCarrito(BaseModel):
+    id: str        # El ID del producto (ej: "P01")
+    cantidad: int  # Cuántas unidades compra    
