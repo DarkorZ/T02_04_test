@@ -13,3 +13,14 @@ class MinimercadoService:
 
     def listar_inventario(self):
         return self.repo_prod.get_all()
+
+    def agregar_producto(self, producto: Producto):
+        productos = self.repo_prod.get_all()
+        if any(p['id'] == producto.id for p in productos):
+            raise HTTPException(status_code=400, detail="ID ya registrado.")
+        if any(p['codigoBarras'] == producto.codigoBarras for p in productos):
+            raise HTTPException(status_code=400, detail="Código de barras ya existe.")
+        
+        productos.append(jsonable_encoder(producto))
+        self.repo_prod.save_all(productos)
+        return producto
