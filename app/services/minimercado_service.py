@@ -59,3 +59,9 @@ class MinimercadoService:
         clientes.append(jsonable_encoder(cliente))
         self.repo_cli.save_all(clientes)
         return cliente
+    
+    def calcular_valor_total(self):
+        """Reporte de valorización [cite: 508]"""
+        productos = self.repo_prod.get_all()
+        total = sum(float(p['precio']) * int(p['stock']) for p in productos)
+        return {"valor_total_inventario": round(total, 2), "items": len(productos)}
