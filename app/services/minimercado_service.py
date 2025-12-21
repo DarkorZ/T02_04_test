@@ -51,3 +51,11 @@ class MinimercadoService:
                 self.repo_prod.save_all(productos)
                 return p
         raise HTTPException(status_code=404, detail="No encontrado")
+    
+    def registrar_cliente(self, cliente: Cliente):
+        clientes = self.repo_cli.get_all()
+        if any(c['id'] == cliente.id for c in clientes):
+            raise HTTPException(status_code=400, detail="Cliente ya existe")
+        clientes.append(jsonable_encoder(cliente))
+        self.repo_cli.save_all(clientes)
+        return cliente
