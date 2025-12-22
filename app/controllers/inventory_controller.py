@@ -79,4 +79,26 @@ def obtener_alertas(
     inventario = service.listar_inventario()
     return [p for p in inventario if p["stock"] <= limite]
 
+# --- ÁREA: CLIENTES (Rol: Cliente / Administrador) ---
+@router.post(
+    "/clientes/registrar",
+    tags=["Gestión de Clientes"],
+    summary="Registrar nuevo cliente",
+    description="Registra un cliente y habilita acumulación de puntos de fidelidad.",
+    response_model=Cliente
+)
+def nuevo_cliente(
+    cliente: Cliente,
+    service: MinimercadoService = Depends(get_service)
+):
+    return service.registrar_cliente(cliente)
 
+
+@router.get(
+    "/clientes/lista",
+    tags=["Gestión de Clientes"],
+    summary="Listar clientes registrados",
+    description="Obtiene la lista completa de clientes del sistema."
+)
+def listar_clientes(service: MinimercadoService = Depends(get_service)):
+    return service.repo_cli.get_all()
