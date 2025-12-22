@@ -41,4 +41,42 @@ def eliminar_producto(
 ):
     return service.eliminar_producto(id)
 
+# --- ÁREA: INVENTARIO (Rol: Inventarista) ---
+@router.post(
+    "/inventario/recepcion/{id}",
+    tags=["Gestión de Inventario"],
+    summary="Registrar recepción de mercancía",
+    description="Aumenta el stock de un producto por llegada de proveedor."
+)
+def recibir_stock(
+    id: str,
+    cantidad: int,
+    service: MinimercadoService = Depends(get_service)
+):
+    return service.recibir_mercancia(id, cantidad)
+
+
+@router.get(
+    "/inventario/reporte-valor",
+    tags=["Gestión de Inventario"],
+    summary="Consultar valor total del inventario",
+    description="Calcula el valor monetario total del inventario."
+)
+def reporte_valor(service: MinimercadoService = Depends(get_service)):
+    return service.calcular_valor_total()
+
+
+@router.get(
+    "/inventario/alertas",
+    tags=["Gestión de Inventario"],
+    summary="Consultar alertas de stock bajo",
+    description="Devuelve productos cuyo stock es menor o igual al límite definido."
+)
+def obtener_alertas(
+    limite: int = 5,
+    service: MinimercadoService = Depends(get_service)
+):
+    inventario = service.listar_inventario()
+    return [p for p in inventario if p["stock"] <= limite]
+
 
