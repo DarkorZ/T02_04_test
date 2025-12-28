@@ -3,3 +3,14 @@ def test_crear_producto_exitoso(client):
     # Se ajustan los datos enviados al endpoint para que coincidan
     # exactamente con el esquema Pydantic definido en schemas.py.
     # Esto evita errores de validación (422 Unprocessable Entity).
+        response = client.post(
+        "/catalogo/crear",
+        json={
+            "id": "P001",
+            "nombre": "Arroz",
+            "codigoBarras": "1234567890",
+            "precio": 2.5,
+            "categoria": "Granos",
+            "stock": 10
+        }
+    )
