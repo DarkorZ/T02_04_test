@@ -1,83 +1,149 @@
-# Sistema de Gestión de Minimercado 
+# 🛒 Sistema de Gestión de Minimercado – FastAPI
 
-Backend desarrollado en **FastAPI** para la gestión de inventario, ventas, clientes y caja de un minimercado.  
-La aplicación expone servicios REST documentados automáticamente mediante **Swagger (OpenAPI 3.0)**.
+Este proyecto corresponde al desarrollo de una **API REST para la gestión de un minimercado**, implementada como parte de la **Tarea T02.03** y extendida con **pruebas unitarias (T02.04)** de la carrera de Ingeniería de Software – Universidad Politécnica Salesiana.
+
+La aplicación permite administrar productos, controlar inventario y registrar ventas, siguiendo una arquitectura organizada basada en **controladores, servicios, repositorios y modelos**.
+
+---
+
+## 🚀 Tecnologías Utilizadas
+
+- **Python 3.10**
+- **FastAPI**
+- **Uvicorn**
+- **Pydantic**
+- **Pytest**
+- **Coverage.py (pytest-cov)**
+
+---
+
+## 📂 Estructura del Proyecto
+
+-T02_03_minimercado
+├── app
+│ ├── controllers
+│ ├── models
+│ ├── repositories
+│ ├── services
+│ ├── init.py
+│ └── main.py
+├── tests
+│ ├── conftest.py
+│ ├── test_catalogo.py
+│ ├── test_inventario.py
+│ └── test_ventas.py
+├── requirements.txt
+├── README.md
+└── .gitignore
 
 
-## Tecnologías utilizadas
+---
 
-- Python 3.12  
-- FastAPI  
-- Uvicorn  
-- Pydantic  
-- Swagger UI (OpenAPI)  
-- Persistencia de datos en archivos JSON  
-- Git y GitHub  
+## 🧪 Entorno Virtual (Recomendado)
+
+Para garantizar la correcta ejecución del proyecto y evitar conflictos entre dependencias, se recomienda el uso de un **entorno virtual de Python**.
+
+### 1️⃣ Crear entorno virtual
+
+Desde la raíz del proyecto:
+
+```bash
+python -m venv venv
 
 
-## Estructura del proyecto
+2️⃣ Activar entorno virtual
 
-app/
-├── main.py
+Windows
 
-├── controllers/
+venv\Scripts\activate
 
-├── services/
+Al activarlo, la consola mostrará:
 
-├── repositories/
+(venv)
 
-├── models/
+Ejecución del Proyecto
+1️⃣ Instalar dependencias del proyecto
 
-data/
+Con el entorno virtual activado:
 
-├── productos.json
+pip install -r requirements.txt
 
-├── clientes.json
+Ejecutar la aplicación
 
-├── ventas.json
+Desde la raíz del proyecto:
 
-## Ejecución del proyecto
+uvicorn app.main:app --reload
 
-1. Instalar dependencias:
+Abrir en el navegador:
 
-    pip install fastapi uvicorn
+http://127.0.0.1:8000/docs
 
-2. Ejecutar la aplicación:
 
-    uvicorn app.main:app --reload
 
-3. Acceder a la API:
+Testing con Pytest (T02.04)
 
-    API: http://127.0.0.1:8000
+git clone https://github.com/josephTc2003/-T02_03_minimercado.git
+cd -T02_03_minimercado
 
-    Swagger UI: http://127.0.0.1:8000/docs
+Archivo .gitignore
 
-## Documentación con Swagger
+venv/
+__pycache__/
+.pytest_cache/
+htmlcov/
+.env
 
-FastAPI genera automáticamente la documentación interactiva mediante Swagger UI, permitiendo:
+Instalación de dependencias para testing
 
-- Visualizar todos los endpoints disponibles
+Con el entorno virtual activado:
 
-- Probar los servicios REST directamente desde el navegador
+pip install pytest pytest-cov httpx
 
-- Validar los datos de entrada y salida
 
-- Revisar ejemplos de solicitudes y respuestas
+Ejecutar pruebas unitarias
 
-La documentación está disponible en la ruta /docs.
+Desde la raíz del proyecto:
 
-## Funcionalidades principales
+pytest
 
-- Gestión de productos e inventario
+Ejecutar análisis de cobertura
+pytest --cov=app --cov-report=term-missing
 
-- Registro y consulta de clientes
+❌ ModuleNotFoundError: No module named 'fastapi'
 
-- Control de stock y alertas de inventario
+Causa:
+FastAPI no estaba instalada en el entorno virtual activo.
 
-- Registro de ventas y facturación
+Solución:
 
-- Reportes básicos de inventario y ventas
+pip install -r requirements.txt
 
-## Trabajo colaborativo
+❌ ModuleNotFoundError: No module named 'httpx'
 
-El proyecto se desarrolla de forma colaborativa utilizando GitHub, donde cada integrante aporta mediante commits y actualizaciones de la aplicación individuales, permitiendo evidenciar el trabajo en equipo y el control de versiones.
+Causa:
+La librería httpx no estaba instalada. Es utilizada por TestClient de FastAPI para ejecutar pruebas sin levantar el servidor.
+
+Solución:
+
+pip install httpx
+
+❌ Error al ejecutar Uvicorn desde la carpeta incorrecta
+
+Causa:
+El servidor fue ejecutado desde la carpeta app/.
+
+Solución correcta:
+
+uvicorn app.main:app --reload
+
+❌ Pytest no mide cobertura
+
+Causa:
+La librería pytest-cov no estaba instalada.
+
+Solución:
+
+pip install pytest-cov
+pytest --cov=app --cov-report=term-missing
+
+
